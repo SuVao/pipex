@@ -6,7 +6,7 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:38:42 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/22 14:17:37 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:21:13 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include "../includes/Libft/libft.h"
+#include "includes/Libft/libft.h"
+
+void error_m(char *mensage, int *fd1, int *fd2);
 
 #endif
