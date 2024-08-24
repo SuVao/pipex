@@ -6,7 +6,7 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:58:30 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/23 17:22:35 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/24 18:20:54 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,9 +197,9 @@ static void	st_child(int *fd, char **av, char **envp)
 	close(filein);
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		error_m("Error in dup2 fd[1]", NULL, &fd[1]);
+	if (execve(av[2], &av[2], envp) == -1)
+		error_m("error in execve", NULL, NULL);
 	close(fd[1]);
-	//exec_st_cmd(av[2], envp);
-	printf("1 filho");
 }
 
 static void nd_child(int *fd, char **av, char **envp)
@@ -219,8 +219,9 @@ static void nd_child(int *fd, char **av, char **envp)
 		error_m("error in dup2 fileout", &fileout, &fd[0]);
 	if (dup2(fd[0], STDOUT_FILENO) == -1)
 		error_m("error in dup2 fd[0]", &fd[0], NULL);
+	if (execve(av[3], &av[3], envp) == -1)
+		error_m("error is execve", NULL, NULL);
 	close(fd[0]);
-	printf("2 filho");
 }
 
 static void	close_fd(int count, int *fd)
@@ -263,10 +264,7 @@ int	execucao(char **av, int *fd, char **envp, int *status)
 
 	pid = 1;
 	if (!av || !fd || !envp)
-	{
 		error_m("Error in execucao function!", NULL, NULL);
-		return (1);
-	}
 	fork_exec(av, fd, envp, pid);
 	waitpid(pid, status, 0);
 	return (0);

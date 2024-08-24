@@ -6,14 +6,14 @@
 #    By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/22 13:41:39 by pesilva-          #+#    #+#              #
-#    Updated: 2024/08/22 14:01:17 by pesilva-         ###   ########.fr        #
+#    Updated: 2024/08/24 19:10:51 by pesilva-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex.a
+NAME = pipex
 
 OBJS = ${SRC_FILES:.c=.o}
-LIBFT = ./include/Libft
+LIBFT = ./Libft
 SRC_FILES = pipex.c \
 			utils.c
 
@@ -23,23 +23,26 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-.c.o: %.o : %.c
-	@cc ${CFLAGS} ${HEADER} -c $< -o $(<:.c=.o)
+%.o: %.c
+	@${CC} ${CFLAGS} ${HEADER} -c $< -o $@
 
-all: ${PROG}
+all: ${NAME}
 
-${PROG}: ${OBJS}
-
-				@echo "Compiling LIBFT"
-				@make re -C ./libft
+${NAME}: ${OBJS}
+	echo "Compiling LIBFT"
+	make re -C ${LIBFT}
+	${CC} ${CFLAGS} ${OBJS} -I${LIBFT} -o ${NAME}
 
 clean:
-		@make clean -C ./libft
-		@rm -f ${OBJS}
+	make clean -C ${LIBFT}
+	rm -f ${OBJS}
+	rm -f ${NAME}
 
 fclean: clean
-				@make fclean -C ./libft
-				@rm -f $(NAME)
-				@rm -f ${PROG}
+	make fclean -C ${LIBFT}
+	rm -f ${OBJS}
+	rm -f ${NAME}
 
-PHONY: all clean fclean
+re: fclean all
+
+.PHONY: all clean fclean re

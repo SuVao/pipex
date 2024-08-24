@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/15 13:38:42 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/24 19:02:07 by pesilva-         ###   ########.fr       */
+/*   Created: 2024/04/13 13:42:36 by pesilva-          #+#    #+#             */
+/*   Updated: 2024/04/13 14:02:55 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-#define PIPEX_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "Libft/libft.h"
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*new;
 
-void error_m(char *mensage, int *fd1, int *fd2);
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
+}
 
-#endif
+// int	main(void)
+// {
+// 	t_list	*new;
+
+// 	new = ft_lstnew("Hello, World!");
+// 	printf("new->content: %s\n", (char *)new->content);
+// 	return (0);
+// }

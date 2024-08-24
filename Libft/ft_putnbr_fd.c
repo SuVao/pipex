@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/15 13:38:42 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/24 19:02:07 by pesilva-         ###   ########.fr       */
+/*   Created: 2024/04/13 12:43:01 by pesilva-          #+#    #+#             */
+/*   Updated: 2024/04/21 21:59:27 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-#define PIPEX_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "Libft/libft.h"
+void	ft_putnbr_fd(int n, int fd)
+{
+	long	nbr;
 
-void error_m(char *mensage, int *fd1, int *fd2);
+	nbr = n;
+	if (nbr < 0)
+	{
+		ft_putchar_fd('-', fd);
+		nbr = -nbr;
+	}
+	if (nbr >= 10)
+	{
+		ft_putnbr_fd(nbr / 10, fd);
+		ft_putchar_fd((nbr % 10) + '0', fd);
+	}
+	else
+		ft_putchar_fd(nbr + '0', fd);
+}
 
-#endif
+// int	main(void)
+// {
+// 	ft_putnbr_fd(2147483648, 1);
+// 	printf("nb: %d\n", 2147483648);
+// 	return (0);
+// }

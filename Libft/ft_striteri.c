@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/15 13:38:42 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/24 19:02:07 by pesilva-         ###   ########.fr       */
+/*   Created: 2024/04/13 13:30:27 by pesilva-          #+#    #+#             */
+/*   Updated: 2024/04/15 17:46:20 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-#define PIPEX_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "Libft/libft.h"
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+{
+	unsigned int	i;
 
-void error_m(char *mensage, int *fd1, int *fd2);
+	i = 0;
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
+}
 
-#endif
+// void print_index(unsigned int i, char *c)
+// {
+// 	printf("Index: %d, Char: %c\n", i, *c);
+// }
+
+// int main()
+// {
+// 	char	str[] = "ola caralho";
+
+// 	ft_striteri(str, print_index);
+// 	return (0);
+// }

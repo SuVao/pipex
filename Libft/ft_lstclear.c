@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/15 13:38:42 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/24 19:02:07 by pesilva-         ###   ########.fr       */
+/*   Created: 2024/04/17 12:24:12 by pesilva-          #+#    #+#             */
+/*   Updated: 2024/04/17 12:28:05 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-#define PIPEX_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "Libft/libft.h"
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*tmp;
 
-void error_m(char *mensage, int *fd1, int *fd2);
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = tmp;
+	}
+}
 
-#endif
+// int main()
+// {
+// 	t_list *lst;
+// 	void (*del)(void *);
+// 	del = &free;
+// 	ft_lstclear(&lst, del);
+// 	return 0;
+// }
