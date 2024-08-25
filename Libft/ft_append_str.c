@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_append_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/15 13:38:42 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/25 16:53:43 by pesilva-         ###   ########.fr       */
+/*   Created: 2024/08/25 14:36:31 by pesilva-          #+#    #+#             */
+/*   Updated: 2024/08/25 14:37:12 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-#define PIPEX_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "Libft/libft.h"
+char *ft_append_str(const char *fix, char *s1, char *s2)
+{
+	char	*inter;
+	char	*final_boss;
 
-void	error_m(char *mensage, int *fd1, int *fd2);
-char	*path_find(char **envp, char *cmd);
-int		path_exits(char **envp);
-void	ft_free_matrix(char **matrix);
-void	execute(char *av, char **envp);
-
-#endif
+	if (!fix || s1 || s2)
+		return (NULL);
+	inter = ft_strjoin(fix, s1);
+	if (!inter)
+		return (NULL);
+	final_boss = ft_strjoin(inter, s2);
+	free(inter);
+	if (!final_boss)
+		return (NULL);
+	return (final_boss);
+}
