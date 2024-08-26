@@ -6,7 +6,7 @@
 #    By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/22 13:41:39 by pesilva-          #+#    #+#              #
-#    Updated: 2024/08/25 18:18:53 by pesilva-         ###   ########.fr        #
+#    Updated: 2024/08/26 18:43:53 by pesilva-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,23 +31,20 @@ LIBFT = $(LIBFT_DIR)libft.a
 all: ${NAME}
 
 ${NAME}: ${OBJS} $(LIBFT)
-	echo "Compiling LIBFT"
-	make re -C ${LIBFT_DIR}
-	${CC} ${CFLAGS} ${OBJS} -L${LIBFT_DIR} -lft -o ${NAME}
+	@echo "Compiling LIBFT"
+	@make re -C ${LIBFT_DIR}
+	@${CC} ${CFLAGS} ${OBJS} -L${LIBFT_DIR} -lft -o ${NAME}
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 clean:
-	make clean -C ${LIBFT_DIR}
-	rm -f ${OBJS}
-	rm -f ${NAME}
+	@make clean -C ${LIBFT_DIR}
+	@rm -f ${OBJS}
 
 fclean: clean
-	make fclean -C ${LIBFT}
-	rm -f ${OBJS}
-	rm -f ${NAME}
+	@rm -f ${NAME}
 
-re: fclean $(LIBFT) all
+re: fclean all
 
 .PHONY: all clean fclean re

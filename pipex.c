@@ -6,7 +6,7 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:58:30 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/25 17:46:45 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:23:52 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void nd_child(int *fd, char **av, char **envp)
 	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fileout == -1)
 		error_m("fileout error", &fd[0], NULL);
-	if (dup2(fileout, STDIN_FILENO) == -1)
+	if (dup2(fileout, STDOUT_FILENO) == -1)
 		error_m("Error in dup2 fileout", &fileout, &fd[0]);
 	if (dup2(fd[0], STDOUT_FILENO) == -1)
 		error_m("Error in dup2 fd[0]", &fd[0], NULL);
@@ -54,10 +54,17 @@ static void nd_child(int *fd, char **av, char **envp)
 
 static void	close_fd(int count, int *fd)
 {
+	if (!fd)
+		error_m("Error in close_fd function!", NULL, NULL);
 	if (count == 0)
 		close(fd[1]);
 	else if (count == 1)
 		close(fd[0]);
+	if(count == 1)
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
 }
 
 static void	fork_exec(char **av, int *fd, char **envp, int pid)
@@ -90,11 +97,18 @@ static int	execucao(char **av, int *fd, char **envp, int *status)
 {
 	int	pid;
 
-	pid = 1;
 	if (!av || !fd || !envp)
 		error_m("Error in execucao function!", NULL, NULL);
+	pid = 0;
 	fork_exec(av, fd, envp, pid);
 	waitpid(pid, status, 0);
+	waitpid(-1, status, 0);
+
+	/* while (pid[--i] >= 0)
+	{
+		waitpid(pid[i], status, 0);
+		i++;
+	} */
 	return (0);
 }
 
@@ -102,9 +116,7 @@ int main(int ac, char **av, char **envp)
 {
 	int	fd[2];
 	int	status;
-	char *way;
-	way = path_find(envp, "ls");
-	printf("%s\n", way);
+	
 	if(ac != 5)
 		error_m("Number of arguments invalid!", NULL, NULL);
 	if (pipe(fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:36:31 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/25 14:37:12 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:05:17 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ char *ft_append_str(const char *fix, char *s1, char *s2)
 {
 	char	*inter;
 	char	*final_boss;
-
-	if (!fix || s1 || s2)
+	
+	if (!fix || !s1 || !s2)
 		return (NULL);
 	inter = ft_strjoin(fix, s1);
 	if (!inter)
