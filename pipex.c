@@ -6,13 +6,16 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:58:30 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/28 18:03:52 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:27:02 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-//function to 
+//function that open the file, close pipes that we dont need
+//switch the file descriptor
+//and execute the command
+//first command / first child
 static void	st_child(int *fd, char **av, char **envp)
 {
 	int	filein;
@@ -32,6 +35,10 @@ static void	st_child(int *fd, char **av, char **envp)
 	execute(av[2], envp);
 }
 
+//function that open the file, close pipes that we dont need
+//switch the file descriptor
+//and execute the command
+//second command / second child
 static void	nd_child(int *fd, char **av, char **envp)
 {
 	int	fileout;
