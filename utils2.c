@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_append_str.c                                    :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 14:36:31 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/28 18:06:52 by pesilva-         ###   ########.fr       */
+/*   Created: 2024/08/28 18:02:58 by pesilva-          #+#    #+#             */
+/*   Updated: 2024/08/28 18:11:23 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-char	*ft_append_str(const char *fix, char *s1, char *s2)
+//funtion that closes the file descripter
+void	close_fd(int count, int *fd)
 {
-	char	*inter;
-	char	*final_boss;
+	if (!fd)
+		error_m("Error in close_fd function!", NULL, NULL);
+	if (count == 0)
+		close(fd[1]);
+	else if (count == 1)
+		close(fd[0]);
+}
+//function to free all
 
-	if (!fix || !s1 || !s2)
-		return (NULL);
-	inter = ft_strjoin(fix, s1);
-	if (!inter)
-		return (NULL);
-	final_boss = ft_strjoin(inter, s2);
-	free(inter);
-	if (!final_boss)
-		return (NULL);
-	return (final_boss);
+void	free_all(char **matrix, char *str)
+{
+	if (matrix)
+		ft_free_matrix(matrix);
+	if (str)
+		free(str);
 }

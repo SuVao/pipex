@@ -6,7 +6,7 @@
 #    By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/22 13:41:39 by pesilva-          #+#    #+#              #
-#    Updated: 2024/08/26 18:43:53 by pesilva-         ###   ########.fr        #
+#    Updated: 2024/08/28 18:10:40 by pesilva-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = pipex
 OBJS = ${SRC_FILES:.c=.o}
 LIBFT_DIR = ./Libft/
 SRC_FILES = pipex.c \
-			utils.c
+			utils.c \
+			utils2.c \
 
 HEADER = -Iincludes
 

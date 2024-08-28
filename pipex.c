@@ -6,12 +6,13 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:58:30 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/26 19:23:52 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:03:52 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+//function to 
 static void	st_child(int *fd, char **av, char **envp)
 {
 	int	filein;
@@ -31,46 +32,35 @@ static void	st_child(int *fd, char **av, char **envp)
 	execute(av[2], envp);
 }
 
-static void nd_child(int *fd, char **av, char **envp)
+static void	nd_child(int *fd, char **av, char **envp)
 {
 	int	fileout;
 	int	existe;
-	
+
 	if (!fd || !av || !envp)
 		return ;
+	close(fd[1]);
 	existe = 0;
 	if (access(av[4], F_OK) == 0)
 		existe = 1;
 	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fileout == -1)
 		error_m("fileout error", &fd[0], NULL);
-	if (dup2(fileout, STDOUT_FILENO) == -1)
-		error_m("Error in dup2 fileout", &fileout, &fd[0]);
-	if (dup2(fd[0], STDOUT_FILENO) == -1)
+	if (dup2(fd[0], STDIN_FILENO) == -1)
 		error_m("Error in dup2 fd[0]", &fd[0], NULL);
 	close(fd[0]);
+	if (dup2(fileout, STDOUT_FILENO) == -1)
+		error_m("Error in dup2 fileout", &fileout, &fd[0]);
+	close(fileout);
 	execute(av[3], envp);
 }
 
-static void	close_fd(int count, int *fd)
-{
-	if (!fd)
-		error_m("Error in close_fd function!", NULL, NULL);
-	if (count == 0)
-		close(fd[1]);
-	else if (count == 1)
-		close(fd[0]);
-	if(count == 1)
-	{
-		close(fd[0]);
-		close(fd[1]);
-	}
-}
-
+//function that create both child process 
+//in the final of the funtion closos both fd
 static void	fork_exec(char **av, int *fd, char **envp, int pid)
 {
 	int	count;
-	
+
 	count = 0;
 	while (count <= 1)
 	{
@@ -93,6 +83,7 @@ static void	fork_exec(char **av, int *fd, char **envp, int pid)
 	}
 }
 
+//function that wait for the process is over
 static int	execucao(char **av, int *fd, char **envp, int *status)
 {
 	int	pid;
@@ -102,22 +93,15 @@ static int	execucao(char **av, int *fd, char **envp, int *status)
 	pid = 0;
 	fork_exec(av, fd, envp, pid);
 	waitpid(pid, status, 0);
-	waitpid(-1, status, 0);
-
-	/* while (pid[--i] >= 0)
-	{
-		waitpid(pid[i], status, 0);
-		i++;
-	} */
-	return (0);
+	return (1);
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	int	fd[2];
 	int	status;
-	
-	if(ac != 5)
+
+	if (ac != 5)
 		error_m("Number of arguments invalid!", NULL, NULL);
 	if (pipe(fd) == -1)
 		error_m("pipe error!", NULL, NULL);

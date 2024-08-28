@@ -6,13 +6,14 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:54:46 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/26 18:12:09 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:09:30 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void error_m(char *mensage, int *fd1, int *fd2)
+//mensage of error and close the pipes
+void	error_m(char *mensage, int *fd1, int *fd2)
 {
 	if (!mensage)
 		return ;
@@ -24,7 +25,7 @@ void error_m(char *mensage, int *fd1, int *fd2)
 	exit(EXIT_FAILURE);
 }
 
-
+//checking if the path exists
 int	path_exits(char **envp)
 {
 	int	i;
@@ -39,12 +40,13 @@ int	path_exits(char **envp)
 	return (0);
 }
 
+//fuction to find the path
 char	*path_find(char **envp, char *cmd)
 {
 	int		i;
 	char	**possible_ways;
 	char	*path;
-	
+
 	if (!envp || !cmd)
 		return (NULL);
 	i = 0;
@@ -68,6 +70,7 @@ char	*path_find(char **envp, char *cmd)
 	return (path);
 }
 
+//function to free everything
 void	ft_free_matrix(char **matrix)
 {
 	int	i;
@@ -82,11 +85,13 @@ void	ft_free_matrix(char **matrix)
 	}
 	free(matrix);
 }
+
+// fuction of checking if cmd exists and spliting comands 
 void	execute(char *av, char **envp)
 {
 	char	**cmd;
 	char	*path;
-	
+
 	if (!av || !envp)
 		return ;
 	cmd = NULL;
@@ -100,15 +105,13 @@ void	execute(char *av, char **envp)
 	path = path_find(envp, cmd[0]);
 	if (!path)
 	{
-		printf("\n%s\n", path);
-		free(path);
+		free_all(cmd, path);
 		write(2, "Command not found\n", 19);
 		exit(127);
 	}
 	if (execve(path, cmd, envp) == -1)
 	{
-		free(path);
-		ft_free_matrix(cmd);
+		free_all(cmd, path);
 		error_m("Error in execve", NULL, NULL);
 	}
 }
