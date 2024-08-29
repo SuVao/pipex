@@ -6,7 +6,7 @@
 #    By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/22 13:41:39 by pesilva-          #+#    #+#              #
-#    Updated: 2024/08/28 18:10:40 by pesilva-         ###   ########.fr        #
+#    Updated: 2024/08/29 15:11:49 by pesilva-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ HEADER = -Iincludes
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g 
 
 LIBFT = $(LIBFT_DIR)libft.a
 

@@ -6,7 +6,7 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 13:54:46 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/28 18:09:30 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:59:25 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*path_find(char **envp, char *cmd)
 	i = 0;
 	while (envp[i] && !ft_strnstr(envp[i], "PATH=", 5))
 		i++;
-	possible_ways = ft_split(envp[i] + 5, ':');
+	possible_ways = ft_split(envp[i] + 19, ':');
 	i = 0;
 	while (possible_ways[i])
 	{
@@ -96,11 +96,6 @@ void	execute(char *av, char **envp)
 		return ;
 	cmd = NULL;
 	path = NULL;
-	if (path_exits(envp) == 0)
-	{
-		write(2, "Path variable does not exist inside envp\n", 42);
-		exit(EXIT_FAILURE);
-	}
 	cmd = ft_split(av, ' ');
 	path = path_find(envp, cmd[0]);
 	if (!path)

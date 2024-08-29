@@ -6,7 +6,7 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 18:02:58 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/28 18:11:23 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:06:17 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	close_fd(int count, int *fd)
 	else if (count == 1)
 		close(fd[0]);
 }
-//function to free all
 
+//function to free all
 void	free_all(char **matrix, char *str)
 {
 	if (matrix)

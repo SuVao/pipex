@@ -6,7 +6,7 @@
 /*   By: pesilva- <pesilva-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:58:30 by pesilva-          #+#    #+#             */
-/*   Updated: 2024/08/28 19:31:13 by pesilva-         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:06:01 by pesilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static void	fork_exec(char **av, int *fd, char **envp, int pid)
 	int	count;
 
 	count = 0;
+	if (pipe(fd) == -1)
+		error_m("pipe error!", NULL, NULL);
 	while (count <= 1)
 	{
 		pid = fork();
@@ -110,8 +112,11 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 5)
 		error_m("Number of arguments invalid!", NULL, NULL);
-	if (pipe(fd) == -1)
-		error_m("pipe error!", NULL, NULL);
+	if (path_exits(envp) == 0)
+	{
+		write(2, "Path variable does not exist inside envp\n", 42);
+		exit(EXIT_FAILURE);
+	}
 	if (!execucao(av, fd, envp, &status))
 		error_m("exec fail!", NULL, NULL);
 	status = WEXITSTATUS(status);
